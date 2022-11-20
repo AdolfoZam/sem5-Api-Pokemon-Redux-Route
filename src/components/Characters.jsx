@@ -21,7 +21,7 @@ const Characters = () => {
              .then(res => setLocations(res.data.results))
     },[])
 
-    console.log(locations)
+    // console.log(locations)
 
     const searchPokemon = () => {
         navigate(`/characters/${characterPokemon}`)
@@ -32,6 +32,17 @@ const Characters = () => {
         axios.get(url)
              .then(res =>setCharacters(res.data.pokemon))
     }
+    const [page,setPage ] = useState(1)
+    const pokemonsperpage=5
+    const lastIndex= page*pokemonsperpage
+    const firstIndex= lastIndex - pokemonsperpage
+    const PokemonPaginated = characters.slice(firstIndex, lastIndex)
+    const totalPages=Math.ceil(characters.length/pokemonsperpage)
+    const numbers = []
+    for(let i=1;i<=totalPages;i++){
+        numbers.push(i)
+    }
+    // console.log(numbers)
     return (
         <div>
             <h1>yo soy un un characters</h1>
@@ -56,7 +67,7 @@ const Characters = () => {
             </select>
             </div>
             <ul>
-            {characters.map(pokemon => (
+            {PokemonPaginated.map(pokemon => (
                <CharacterPoke 
                url={pokemon.url ? pokemon.url : pokemon.pokemon.url} 
                key={pokemon.url ? pokemon.url : pokemon.pokemon.url} 
@@ -64,7 +75,20 @@ const Characters = () => {
             ))}
             
             </ul>
-          
+          <div>
+             <button 
+             onClick={() => setPage(page-1)} 
+             disabled ={page===1}>
+                Prev
+                </button>
+                {numbers.map(number =>(
+                    <button onClick={() => setPage(number)}>{number}</button>
+                ))}
+             <button 
+             onClick={() => setPage(page+1)}
+             disabled={page===totalPages}>
+                Next</button>
+          </div>
         </div>
     );
 };
