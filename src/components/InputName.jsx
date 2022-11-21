@@ -16,13 +16,20 @@ const InputName = () => {
     }
     return (
         <div>
-            <h1>yo soy un input</h1>
+            <h1>Pokemon</h1>
+
+            <h2>Hello Trainer!</h2>
+
+            <h3>Give me your name to start</h3>
             <input 
             type="text" 
+            placeholder='Your Name'
             onChange={e => setUserName(e.target.value)}
             value={userName}
             />
-            <button onClick={enterName}>enter</button>
+            <button onClick={enterName}>
+            <i class="fa-sharp fa-solid fa-square-arrow-up-right"></i>
+            </button>
         </div>
     );
 };
